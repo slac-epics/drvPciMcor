@@ -1,0 +1,26 @@
+drvPciMcor:
+	slim pseudo 'driver' which just provides 'init' and 'report' entry
+    points.
+
+      'init' uses drvUioPciGen to scan the PCI bus for MCOR devices and
+             register them with devBusMapped.
+
+      'report' prints info about found MCOR devices.
+
+    USAGE
+    =====
+
+      To build an application make sure the Makefile contains
+
+         app_DBD += epicspci.dbd
+         app_DBD += devBusMapped.dbd
+         app_DBD += drvUioPciGen.dbd
+         app_DBD += drvMcorPci.dbd
+
+         app_LIBS += drvMcorPci
+         app_LIBS += drvUioPciGen
+         app_LIBS += epicspci
+         app_LIBS += devBusMapped
+
+      (of course, the RELEASE file must list all the respective EPICS modules
+       and their dependencies - have fun).
