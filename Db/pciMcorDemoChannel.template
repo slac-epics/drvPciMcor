@@ -1,0 +1,64 @@
+record(longout, "$(prefix):$(chnl):SETPT_DES") {
+	field(DESC, "Chnl $(chnl) SETPT")
+	field(DTYP, "BusAddress")
+	field(OUT,  "#C$(chnl)S6@mcor0.0+0x00,le32")
+}
+
+record(longin, "$(prefix):$(chnl):SETPT_DES_R") {
+	field(DESC, "Chnl $(chnl) SETPT Readback")
+	field(DTYP, "BusAddress")
+	field(INP,  "#C$(chnl)S6@mcor0.0+0x04,le32")
+	field(SCAN, "1 second")
+}
+
+record(longin, "$(prefix):$(chnl):ADC") {
+	field(DESC, "Chnl $(chnl) ADC")
+	field(DTYP, "BusAddress")
+	field(INP,  "#C$(chnl)S6@mcor0.0+0x08,le32")
+	field(SCAN, "1 second")
+}
+
+record(longin, "$(prefix):$(chnl):ADC_AVG") {
+	field(DESC, "Chnl $(chnl) ADC AVG")
+	field(DTYP, "BusAddress")
+	field(INP,  "#C$(chnl)S6@mcor0.0+0x0c,le32")
+	field(SCAN, "1 second")
+}
+
+record(longout, "$(prefix):$(chnl):FSCL") {
+	field(DESC, "Chnl $(chnl) FullScale")
+	field(DTYP, "BusAddress")
+	field(OUT,  "#C$(chnl)S6@mcor0.0+0x20,le32")
+}
+
+record(longout, "$(prefix):$(chnl):FSCLR") {
+	field(DESC, "Chnl $(chnl) FullScale")
+	field(DTYP, "BusAddress")
+	field(OUT,  "#C$(chnl)S6@mcor0.0+0x24,le32")
+}
+
+
+record(longout, "$(prefix):$(chnl):CSR") {
+	field(DESC, "Chnl $(chnl) CSR")
+	field(DTYP, "BusAddress")
+	field(OUT,  "#C$(chnl)S6@mcor0.0+0x30,le32")
+}
+
+record(longin, "$(prefix):$(chnl):CSR_R") {
+	field(DESC, "Chnl $(chnl) CSR ReadBack")
+	field(DTYP, "BusAddress")
+	field(INP,  "#C$(chnl)S6@mcor0.0+0x30,le32")
+	field(SCAN, "1 second")
+}
+
+record(longout, "$(prefix):$(chnl):CSR_S") {
+	field(DESC, "Chnl $(chnl) CSR Set")
+	field(DTYP, "BusAddress")
+	field(OUT,  "#C$(chnl)S6@mcor0.0+0x34,le32")
+}
+
+record(longout, "$(prefix):$(chnl):CSR_C") {
+	field(DESC, "Chnl $(chnl) CSR Clr")
+	field(DTYP, "BusAddress")
+	field(OUT,  "#C$(chnl)S6@mcor0.0+0x38,le32")
+}
