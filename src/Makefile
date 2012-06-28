@@ -37,6 +37,7 @@ pciMcorDemo_LIBS = $(EPICS_BASE_IOC_LIBS)
 pciMcorDemo_LIBS+= drvUioPciGen
 pciMcorDemo_LIBS+= devBusMapped
 pciMcorDemo_LIBS+= epicspci
+pciMcorDemo_LIBS+= $(CEXP_LIBS)
 
 #===========================
 

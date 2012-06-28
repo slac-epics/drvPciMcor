@@ -13,7 +13,8 @@ TEMPLATE_TOP=$(EPICS_BASE)/templates/makeBaseApp/top
 # ==================================================================================
 # If using macro substitutions, point MSI at the binary:
 EXTENSIONS_MODULE_VERSION=extensions-3.14.10
-MSI=$(EPICS_SITE_TOP)/extensions/$(EXTENSIONS_MODULE_VERSION)/bin/$(EPICS_HOST_ARCH)/msi
+#MSI=$(EPICS_SITE_TOP)/extensions/$(EXTENSIONS_MODULE_VERSION)/bin/$(EPICS_HOST_ARCH)/msi
+MSI=/home/till/epics/extensions/$(EXTENSIONS_MODULE_VERSION)/bin/$(EPICS_HOST_ARCH)/msi
 # ==================================================================================
 
 # =============================================================
@@ -30,6 +31,7 @@ DEVBUSMAPPED_MODULE_VERSION=Devl
 MISCUTILS_MODULE_VERSION=Devl
 DEVLIB2_MODULE_VERSION=Devl
 DRVUIOPCIGEN_MODULE_VERSION=Devl
+CEXPSH_MODULE_VERSION=Devl
 
 # ============================================================
 # External Support
@@ -38,6 +40,7 @@ DEVBUSMAPPED=$(EPICS_MODULES)/devBusMapped/$(DEVBUSMAPPED_MODULE_VERSION)
 MISCUTILS=$(EPICS_MODULES)/miscUtils/$(MISCUTILS_MODULE_VERSION)
 DEVLIB2=$(EPICS_MODULES)/devlib2/$(DEVLIB2_MODULE_VERSION)
 DRVUIOPCIGEN=$(EPICS_MODULES)/drvUioPciGen/$(DRVUIOPCIGEN_MODULE_VERSION)
+CEXPSH=$(EPICS_MODULES)/cexpsh/$(DRVUIOPCIGEN_MODULE_VERSION)
 
 # =================================================================
 # Define EPICS_BASE
