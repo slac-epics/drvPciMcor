@@ -20,12 +20,13 @@
 
 #define MCOR_PRE    "mcor"
 #define DEVNAMCAT(pre,i,b) pre#i"."#b
-#define DEVNAM DEVNAMCAT(MCOR_PRE,MCOR_INST,MCOR_BAR_NO)
+#define DEVNAMCATCAT(pre,i,b) DEVNAMCAT(pre,i,b)
+#define DEVNAM DEVNAMCATCAT(MCOR_PRE,MCOR_INST,MCOR_BAR_NO)
 
 static long mcor_report(int level)
 {
 epicsPCIDevice *pci_dev;
-volatile void  *base;
+DevBusMappedDev dev;
 
 	errlogPrintf(DRVNAM": Pseudo driver for PCIe MCOR\n");
 	if ( level ) {
@@ -35,10 +36,10 @@ volatile void  *base;
 			errlogPrintf("MCOR PCI Device info:\n");
 			devPCIShowDevice(level, pci_dev);
 		}
-		if ( ! (base = devBusMappedFind(DEVNAM)) ) {
+		if ( ! (dev = devBusMappedFind(DEVNAM)) ) {
 			errlogPrintf(DRVNAM" error: MCOR (devBusMapped) %s not found.\n", DEVNAM);
 		} else {
-			errlogPrintf("  Base Addr. mapped @%p\n", base);
+			errlogPrintf("  Base Addr. mapped @%p\n", dev->baseAddr);
 		}
 	}
 	return 0;
