@@ -1,0 +1,13 @@
+record(stringin,"$(prefix):FW_VERS") {
+	field(DESC, "System Info")
+	field(DTYP, "BusAddress")
+	field(INP,  "#C0S0@mcor0.0+0x5c0,be8(8)")
+	field(PINI, "YES")
+}
+
+record(stringin,"$(prefix):SYSID") {
+	field(DESC, "System Info")
+	field(DTYP, "BusAddress")
+	field(INP,  "#C0S0@mcor0.0+0x5c8,be8(4)")
+	field(PINI, "YES")
+}

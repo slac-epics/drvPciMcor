@@ -1,3 +1,9 @@
+file pciMcorDemoGbl.template
+{
+	pattern { dummy }
+	{ dummy }
+}
+
 file pciMcorDemoChannel.template
 {
 	pattern {  chnl }
