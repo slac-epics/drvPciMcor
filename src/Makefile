@@ -25,6 +25,7 @@ pciMcorDemo_DBD  = base.dbd
 pciMcorDemo_DBD += epicspci.dbd
 pciMcorDemo_DBD += devBusMapped.dbd
 pciMcorDemo_DBD += drvUioPciGen.dbd
+pciMcorDemo_DBD += drvPciMcor.dbd
 
 drvPciMcor_SRCS += drvPciMcor.c
 
@@ -34,6 +35,7 @@ pciMcorDemo_SRCS_RTEMS   += -nil-
 pciMcorDemo_SRCS_vxWorks += -nil-
 
 pciMcorDemo_LIBS = $(EPICS_BASE_IOC_LIBS)
+pciMcorDemo_LIBS+= drvPciMcor
 pciMcorDemo_LIBS+= drvUioPciGen
 pciMcorDemo_LIBS+= devBusMapped
 pciMcorDemo_LIBS+= epicspci
