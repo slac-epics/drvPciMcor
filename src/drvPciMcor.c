@@ -4,6 +4,9 @@
 #include <devBusMapped.h>
 #include <errlog.h>
 #include <epicsExport.h>
+#include <drvPciMcor.h>
+#include <cantProceed.h>
+#include <epicsMMIO.h>
 
 #define DRVNAM "drvPciMcor"
 
@@ -23,9 +26,15 @@
 #define DEVNAMCATCAT(pre,i,b) DEVNAMCAT(pre,i,b)
 #define DEVNAM DEVNAMCATCAT(MCOR_PRE,MCOR_INST,MCOR_BAR_NO)
 
+#define MCOR_DAC_OFF  0
+#define MCOR_CH_SHFT  6
+#define MCOR_CH_BASE(ch) ((ch)<<MCOR_CH_SHFT)
+
+static volatile void *theBase = 0;
+
 static long mcor_report(int level)
 {
-epicsPCIDevice *pci_dev;
+const epicsPCIDevice *pci_dev;
 DevBusMappedDev dev;
 
 	errlogPrintf(DRVNAM": Pseudo driver for PCIe MCOR\n");
@@ -45,14 +54,36 @@ DevBusMappedDev dev;
 	return 0;
 }
 
+extern int
+drvPciMcorMgntSetDAC(void *card_p, int dac_channel, epicsInt32 dac_val)
+{
+	if (   card_p
+	    || dac_channel < 0
+	    || dac_channel >= MCOR_NUM_CHANNELS
+	    || 0 == theBase )
+		return -1;
+
+	le_iowrite32(theBase + MCOR_CH_BASE(dac_channel) + MCOR_DAC_OFF , dac_val);
+	return 0;
+}
+
 static long mcor_init(void)
 {
-long rval;
+long            rval;
+DevBusMappedDev dev;
 	rval = drvUioPciGenRegisterDevice(PCI_VENDOR_SLAC, PCI_DEV_SLAC_MCOR, 0x10000, 0x10000, MCOR_INST, (1<<MCOR_BAR_NO), "mcor");
 	if ( rval < 0 ) {
 		errlogPrintf(DRVNAM" error: Unable to register MCOR device\n");
 	} else if ( 0 == rval ) {
 		errlogPrintf(DRVNAM" error: No MCOR devices found\n");
+	} else {
+		if ( ! (dev = devBusMappedFind( DEVNAM )) ) {
+			rval = -1;
+			cantProceed(DRVNAM" INTERNAL ERROR: MCOR device registered but not found!\n");
+			/* never get here */
+		} else {
+			theBase = dev->baseAddr;
+		}
 	}
 	return rval;
 }

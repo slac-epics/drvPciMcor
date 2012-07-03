@@ -21,6 +21,8 @@ PROD_IOC = pciMcorDemo
 DBD		 = drvPciMcor.dbd
 DBD     += pciMcorDemo.dbd
 
+INC     += drvPciMcor.h
+
 pciMcorDemo_DBD  = base.dbd
 pciMcorDemo_DBD += epicspci.dbd
 pciMcorDemo_DBD += devBusMapped.dbd
