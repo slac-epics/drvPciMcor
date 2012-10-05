@@ -1,0 +1,4 @@
+dbLoadDatabase("dbd/pciMcorDemo.dbd")
+pciMcorDemo_registerRecordDeviceDriver(pdbbase)
+iocInit()
+theMcor=devBusMappedExtFindBA("mcor0.0")

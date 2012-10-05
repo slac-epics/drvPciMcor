@@ -17,6 +17,8 @@ include $(TOP)/configure/CONFIG
 
 LIBRARY  = drvPciMcor
 PROD_IOC = pciMcorDemo
+SCRIPTS_IOC=$(SCRIPTS_IOC_$(OS_CLASS))
+SCRIPTS_IOC_Linux = demo.cexp
 # <name>.dbd will be created from <name>Include.dbd
 DBD		 = drvPciMcor.dbd
 DBD     += pciMcorDemo.dbd
