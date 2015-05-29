@@ -15,9 +15,9 @@ drvPciMcor:
          app_DBD += epicspci.dbd
          app_DBD += devBusMapped.dbd
          app_DBD += drvUioPciGen.dbd
-         app_DBD += drvMcorPci.dbd
+         app_DBD += drvPciMcor.dbd
 
-         app_LIBS += drvMcorPci
+         app_LIBS += drvPciMcor
          app_LIBS += drvUioPciGen
          app_LIBS += epicspci
          app_LIBS += devBusMapped

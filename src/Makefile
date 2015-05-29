@@ -34,7 +34,7 @@ pciMcorDemo_DBD += drvPciMcor.dbd
 drvPciMcor_SRCS += drvPciMcor.c
 
 pciMcorDemo_SRCS = pciMcorDemo_registerRecordDeviceDriver.cpp
-pciMcorDemo_SRCS_DEFAULT += pciMcorDemoMain.c
+pciMcorDemo_SRCS_DEFAULT += pciMcorDemoMain.cpp
 pciMcorDemo_SRCS_RTEMS   += -nil-
 pciMcorDemo_SRCS_vxWorks += -nil-
 
