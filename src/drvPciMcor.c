@@ -78,7 +78,7 @@ static long mcor_init(void)
 {
 long            rval;
 DevBusMappedDev dev;
-	rval = drvUioPciGenRegisterDevice(PCI_VENDOR_SLAC, PCI_DEV_SLAC_MCOR, 0x10000, 0x10000, MCOR_INST, (1<<MCOR_BAR_NO), MCOR_PRE);
+	rval = drvUioPciGenRegisterDevice(PCI_VENDOR_SLAC, PCI_DEV_SLAC_MCOR, 0x10000, 0x10000, -1, (1<<MCOR_BAR_NO), MCOR_PRE);
 	if ( rval < 0 ) {
 		errlogPrintf(DRVNAM" error: Unable to register MCOR device\n");
 	} else if ( 0 == rval ) {
@@ -104,7 +104,7 @@ static drvet drvPciMcor = {
 epicsExportAddress( drvet, drvPciMcor );
 
 
-#define MCOR_FILENAME "/dev/emcor"
+#define EMCOR_FILENAME "/dev/emcor"
 #define TIMEOUT_MSEC 200
 
 static struct IrqFdStruct {
@@ -151,7 +151,7 @@ static int mcor_irq_thread(void *eiFdStruct) {
 }
 
 static void drvPciMcorIRQInit(void) {
-	int fd = open(MCOR_FILENAME, O_RDWR);
+	int fd = open(EMCOR_FILENAME, O_RDWR);
 	if (fd < 0) {
 		errlogPrintf("Failed to open FD: %s\n", strerror(errno));
 		return;
