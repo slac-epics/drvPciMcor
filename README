@@ -24,3 +24,10 @@ drvPciMcor:
 
       (of course, the RELEASE file must list all the respective EPICS modules
        and their dependencies - have fun).
+
+
+EMCOR-related functionality:
+To use EMCOR interrupts, start the sample IRQ handling thread by supplying the following command to the startup script:
+drvPciMcorIRQInit
+
+This command will enable MCOR interrupts and start the IRQ thread that will wait for interrupts on the file descriptor. After receiving the interrupt, it will write to the output the interrupt status register and enable back the MCOR interrupts.
