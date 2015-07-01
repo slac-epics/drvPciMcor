@@ -9,7 +9,6 @@
 #include <epicsMMIO.h>
 #include <iocsh.h>
 #include <fcntl.h>
-#include <poll.h>
 #include <errno.h>
 #include <epicsThread.h>
 #include <string.h>
@@ -104,65 +103,54 @@ static drvet drvPciMcor = {
 epicsExportAddress( drvet, drvPciMcor );
 
 
-#define EMCOR_FILENAME "/dev/emcor"
-#define TIMEOUT_MSEC 200
-
-static struct IrqFdStruct {
-	int fd;
-	void *handler;
-} irqFdStruct;
-
-static void irq_handler(int status) {
+static void irq_handler(int fd, int status) {
 	errlogPrintf("Status: 0x%08X\n", status);
 
 	// enable back interrupts
 	int wVal = 0xFFFFFFFF;
-	int retval = write(irqFdStruct.fd, &wVal, 4);
+	int retval = write(fd, &wVal, 4);
 	if (retval != 4) {
 		errlogPrintf("Write failed, return value: %d\n", retval);
 	}
 }
 
+struct IrqFdStruct {
+	int fd;
+	void *handler;
+};
+
 static int mcor_irq_thread(void *eiFdStruct) {
-	struct IrqFdStruct *eiFdS = eiFdStruct;
-	int val, retP, retR;
-	struct pollfd fds[1];
-	fds[0].fd = eiFdS->fd;
-	fds[0].events = POLLIN;
-	void (*irqHandler)(int) = eiFdS->handler;
+	struct IrqFdStruct *eiFdS = (struct IrqFdStruct *) eiFdStruct;
+	int val, retR;
+	void (*irqHandler)(int, int) = eiFdS->handler;
 
 	while (1) {
-		retP = poll(fds, 1, TIMEOUT_MSEC);
-		if (retP > 0) {
-			retR = read(eiFdS->fd, &val, 4);
-			if (retR != 4) {
-				errlogPrintf("Read failed, return value: %d\n", retR);
-				return -1;
-			}
-			if (irqHandler) {
-				irqHandler(val);
-			}
-		} else if (retP < 0) {
-			errlogPrintf("Poll failed: %s\n", strerror(errno));
+		retR = read(eiFdS->fd, &val, 4);
+		if (retR != 4) {
+			errlogPrintf("Read failed, return value: %d\n", retR);
 			return -1;
+		}
+		if (irqHandler) {
+			irqHandler(eiFdS->fd, val);
 		}
 	}
 	return 0;
 }
 
-static void drvPciMcorIRQInit(void) {
-	int fd = open(EMCOR_FILENAME, O_RDWR);
+static void drvPciMcorIRQInit(const char *devfile) {
+	int fd = open(devfile, O_RDWR);
 	if (fd < 0) {
-		errlogPrintf("Failed to open FD: %s\n", strerror(errno));
+		errlogPrintf("Failed to open FD '%s': %s\n", devfile, strerror(errno));
 		return;
 	}
 
-	irqFdStruct.fd = fd;
-	irqFdStruct.handler = irq_handler;
+	struct IrqFdStruct *irqFdStruct = (struct IrqFdStruct *) malloc(sizeof(struct IrqFdStruct));
+	irqFdStruct->fd = fd;
+	irqFdStruct->handler = irq_handler;
 
 	epicsThreadMustCreate("mcor_irq_thread", epicsThreadPriorityHigh + 5,
 			epicsThreadGetStackSize(epicsThreadStackMedium),
-			(EPICSTHREADFUNC) mcor_irq_thread, &irqFdStruct);
+			(EPICSTHREADFUNC) mcor_irq_thread, irqFdStruct);
 
 	// enable interrupts
 	int wVal = 0xFFFFFFFF;
@@ -172,11 +160,18 @@ static void drvPciMcorIRQInit(void) {
 	}
 }
 
-static const iocshFuncDef drvPciMcorInitFuncDef = { "drvPciMcorIRQInit", 0, NULL };
+static const iocshArg drvPciMcorInitArg0 = { "devfile", iocshArgString };
+static const iocshArg *drvPciMcorInitArgs[] = { &drvPciMcorInitArg0 };
+
+static const iocshFuncDef drvPciMcorInitFuncDef = { "drvPciMcorIRQInit", 1, drvPciMcorInitArgs };
 static void drvPciMcorInitCallFunc(const iocshArgBuf *args) {
-	drvPciMcorIRQInit();
+	drvPciMcorIRQInit(args[0].sval);
 }
 static void drvPciMcorRegister(void) {
-	iocshRegister(&drvPciMcorInitFuncDef, drvPciMcorInitCallFunc);
+	static int firstTime = 1;
+	if (firstTime) {
+		firstTime = 0;
+		iocshRegister(&drvPciMcorInitFuncDef, drvPciMcorInitCallFunc);
+	}
 }
 epicsExportRegistrar(drvPciMcorRegister);
