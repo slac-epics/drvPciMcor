@@ -1,0 +1,28 @@
+==============================================================
+#
+#  Name: RELEASE_NOTES
+#
+#  Rem:  This file contains the release notes for the
+#        EPICS module drvPciMcor.
+#
+#  Auth:  Till Straumann
+#
+#  Side:  for documentation please see the following:
+#  https://slacspace.slac.stanford.edu/sites/controls/specialprojects/mcor_controller/Documents/Project%20Documents/
+#--------------------------------------------------------------
+#
+drvPciMcor-R1-0-3  26-Jan-2017, K. Luchini
+                    upgraded devBusMapped-R3-1-0 to devBusMapped-R3-1-2
+                    upgraded drvUioPciGen-R1-0-1 to drvUioPciGen-R1-0-2
+                    upgraded miscUtils-R2-2-2 to miscUtils-R2-2-3
+drvPciMcor-R1-0-2  29-May-2015, T Cesnik
+                    added evr changes
+                    upgraded from devLib2-R2-0-0_1-0 to devLib2-R3-0-0_1-1
+                    Built agains EPICS base-R3-14-12-4_1-0
+drvPciMcor-R1-0-1  05-Oct,2012, T. Straumann
+                    add cexp in drvPciMcorDemoMain.cpp
+                    added script for starting up cexp demo and install in bin
+                    added 'md' utility for memory/register dumps
+drvPciMcor-R1-0-0  26-Jun-2012, T. Straumann
+                   Initial release. Built against EPICS base-R3-14-12
+# End of file
