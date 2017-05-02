@@ -11,6 +11,9 @@
 #  https://slacspace.slac.stanford.edu/sites/controls/specialprojects/mcor_controller/Documents/Project%20Documents/
 #--------------------------------------------------------------
 #
+R1.1.0		02-May-2017, Marcio Donadio
+		- Module migrated to EPICS 3.15 and to Git and Git Workflow
+
 drvPciMcor-R1-0-3  26-Jan-2017, K. Luchini
                     upgraded devBusMapped-R3-1-0 to devBusMapped-R3-1-2
                     upgraded drvUioPciGen-R1-0-1 to drvUioPciGen-R1-0-2
