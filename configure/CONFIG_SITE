@@ -12,7 +12,7 @@
 # for a subset of the cross-compiled target architectures
 # that Base is built for.
 ALL_ARCHS = $(sort $(notdir $(wildcard $(DRVUIOPCIGEN)/lib/*)))
-CROSS_COMPILER_TARGET_ARCHS = $(filter-out vxworks% vxWorks% RTEMS%, $(ALL_ARCHS))
+CROSS_COMPILER_TARGET_ARCHS = $(filter-out $(EPICS_HOST_ARCH) vxworks% vxWorks% RTEMS%, $(ALL_ARCHS))
 
 # Set this when your IOC and the host use different paths
 # to access the application. This will be needed to boot
