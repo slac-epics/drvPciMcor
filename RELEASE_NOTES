@@ -11,6 +11,10 @@
 #  https://slacspace.slac.stanford.edu/sites/controls/specialprojects/mcor_controller/Documents/Project%20Documents/
 #--------------------------------------------------------------
 #
+R1.2.0 11/9/2018, T. Straumann
+        - added $(CEXP_SYS_LIBS) to application's xxx_SYS_LIBS; this fixed
+          broken build.
+        - new dependent module versions for EPICS V7
 R1.1.0		02-May-2017, Marcio Donadio
 		- Module migrated to EPICS 3.15 and to Git and Git Workflow
 
