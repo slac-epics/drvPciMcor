@@ -11,6 +11,9 @@
 #include <cexp.h>
 #endif
 
+#define __STDC_FORMAT_MACROS
+#include <inttypes.h>
+
 #define PREF ""
 
 static void dumpchars(unsigned char **pstr, unsigned char *end)
@@ -22,7 +25,7 @@ static void dumpchars(unsigned char **pstr, unsigned char *end)
     }
 }
 
-static void dumpval(unsigned address, int size)
+static void dumpval(uintptr_t address, int size)
 {
     switch(abs(size)) {
         case 4: printf(PREF"%08x", *(unsigned*)address);        break;
@@ -35,7 +38,7 @@ static void dumpval(unsigned address, int size)
 
 
 extern "C" int
-md(unsigned address, int count, int size)
+md(uintptr_t address, int count, int size)
 {
 int i = 0;
 unsigned char *oadd = (unsigned char*)address;
@@ -49,7 +52,7 @@ unsigned char *oadd = (unsigned char*)address;
 			if (i) {
 				dumpchars(&oadd, (unsigned char*)address);
 			}
-			printf("\n0x%08x:", address);
+			printf("\n0x%08" PRIxPTR ":", address);
 		}
 		printf("  ");
 		dumpval(address,size);
