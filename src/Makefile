@@ -44,6 +44,7 @@ pciMcorDemo_LIBS+= drvUioPciGen
 pciMcorDemo_LIBS+= devBusMapped
 pciMcorDemo_LIBS+= epicspci
 pciMcorDemo_LIBS+= $(CEXP_LIBS)
+pciMcorDemo_SYS_LIBS+= $(CEXP_SYS_LIBS)
 
 #===========================
 
