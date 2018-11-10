@@ -21,9 +21,9 @@
 # ==========================================================
 DEVBUSMAPPED_MODULE_VERSION=R3.2.3
 MISCUTILS_MODULE_VERSION=R2.2.5
-DEVLIB2_MODULE_VERSION=R2.8-0.1.0
-DRVUIOPCIGEN_MODULE_VERSION=R1.1.1
-CEXPSH_MODULE_VERSION=R1.0.1
+DEVLIB2_MODULE_VERSION=R2.10-0.1.0
+DRVUIOPCIGEN_MODULE_VERSION=R1.1.3
+CEXPSH_MODULE_VERSION=R1.1.2
 
 # ==========================================================
 # Define module paths using pattern
