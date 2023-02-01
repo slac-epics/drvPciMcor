@@ -11,6 +11,9 @@
 #  https://slacspace.slac.stanford.edu/sites/controls/specialprojects/mcor_controller/Documents/Project%20Documents/
 #--------------------------------------------------------------
 #
+R1.2.1 01/31/2023, K. Luchini
+        - upgrade drvUioPciGen from R1.1.3 to R1.1.4
+
 R1.2.0 11/9/2018, T. Straumann
         - added $(CEXP_SYS_LIBS) to application's xxx_SYS_LIBS; this fixed
           broken build.
